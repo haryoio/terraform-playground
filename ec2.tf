@@ -2,27 +2,27 @@
 # -----------------
 # EC2 Key pair
 # -----------------
-variable "key_name" {
-  default = "haryoiro-keypair"
+locals {
+  key_name = "${local.project_name}keypair"
 }
 
-resource "tls_private_key" "haryoiro_private_key" {
+resource "tls_private_key" "private_key" {
   algorithm = "ED25519"
 }
 
 locals {
-  public_key_file  = "$HOME/${var.key_name}.id_ed25519.pub"
-  private_key_file = "$HOME/${var.key_name}.id_ed25519"
+  public_key_file  = "$HOME/${local.key_name}.id_ed25519.pub"
+  private_key_file = "$HOME/${local.key_name}.id_ed25519"
 }
 
-resource "local_file" "haryoiro_private_key_pem" {
+resource "local_file" "private_key_pem" {
   filename = local.private_key_file
-  content  = tls_private_key.haryoiro_private_key.private_key_pem
+  content  = tls_private_key.private_key.private_key_pem
 }
 
-resource "aws_key_pair" "haryoiro_keypair" {
-  key_name   = var.key_name
-  public_key = tls_private_key.haryoiro_private_key.public_key_openssh
+resource "aws_key_pair" "keypair" {
+  key_name   = local.key_name
+  public_key = tls_private_key.private_key.public_key_openssh
 }
 
 # -----------------
@@ -35,11 +35,11 @@ data "aws_ssm_parameter" "amzn2_latest_ami" {
 resource "aws_instance" "haryoiro_ec2" {
   ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
   instance_type               = "t2.micro"
-  availability_zone           = var.az_a
+  availability_zone           = local.az_a
   vpc_security_group_ids      = [aws_security_group.haryoiro_ec2_sg.id]
-  subnet_id                   = aws_subnet.haryoiro_public_1a_sn.id
+  subnet_id                   = aws_subnet.public_1a.id
   associate_public_ip_address = "true"
-  key_name                    = var.key_name
+  key_name                    = local.key_name
   tags = {
     Name = "haryoiro-ec2"
   }
