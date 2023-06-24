@@ -34,4 +34,7 @@ terraform destroy
 
 ## 参考
 
-[【Terraform入門】AWSのVPCとEC2を構築してみる](https://kacfg.com/terraform-vpc-ec2/)
+- [【Terraform入門】AWSのVPCとEC2を構築してみる](https://kacfg.com/terraform-vpc-ec2/)
+- [How to generate SSH key in Terraform using tls_private_key?
+  ](https://jhooq.com/terraform-generate-ssh-key/)
+- [terraformでディレクトリごとにAWSアカウントを切り替える](https://zenn.dev/isosa/articles/fd9a9f92b68f6c)
