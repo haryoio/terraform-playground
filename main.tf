@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "ap-northeast-1"
+  region                   = "ap-northeast-1"
   shared_credentials_files = "[$HOME/.aws/credentials]"
 }
 
