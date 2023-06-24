@@ -1,51 +1,51 @@
-resource "aws_vpc" "handson_vpc" {
+resource "aws_vpc" "haryoiro_vpc" {
   cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
+  enable_dns_hostnames = "true"
   tags = {
-    Name = "terraform-handson-vpc"
+    Name = "haryoiro-vpc"
   }
 }
 
 # -----------------
 # Subnet
 # -----------------
-resource "aws_subnet" "handson_public_1a_sn" {
-  vpc_id               = aws_vpc.handson_vpc.id
+resource "aws_subnet" "haryoiro_public_1a_sn" {
+  vpc_id               = aws_vpc.haryoiro_vpc.id
   cidr_block           = "10.0.1.0/24"
-  availability_zone_id = var.az_a
+  availability_zone = var.az_a
 
   tags = {
-    Name = "terraform-handson-public-1a-sn"
+    Name = "haryoiro-public-1a-sn"
   }
 }
 
 # -----------------
 # Internet Gateway
 # -----------------
-resource "aws_internet_gateway" "handson_igw" {
-  vpc_id = aws_vpc.handson_vpc.id
+resource "aws_internet_gateway" "haryoiro_igw" {
+  vpc_id = aws_vpc.haryoiro_vpc.id
   tags = {
-    Name = "terraform-handson-igw"
+    Name = "haryoiro-igw"
   }
 }
 
 # -----------------
 # Route table
 # -----------------
-resource "aws_route_table" "handson_public_rt" {
-  vpc_id = aws_vpc.handson_vpc.id
-  route = {
+resource "aws_route_table" "haryoiro_public_rt" {
+  vpc_id = aws_vpc.haryoiro_vpc.id
+  route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.handson_igw.id
+    gateway_id = aws_internet_gateway.haryoiro_igw.id
   }
   tags = {
-    Name = "terraform-handson-public-rt"
+    Name = "haryoiro-public-rt"
   }
 }
 
-resource "aws_route_table_association" "handson_public_rt_associate" {
-  subnet_id      = aws_subnet.handson_public_1a_sn.id
-  route_table_id = aws_route_table_association.handson_public_rt_associate.id
+resource "aws_route_table_association" "haryoiro_public_rt_associate" {
+  subnet_id      = aws_subnet.haryoiro_public_1a_sn.id
+  route_table_id = aws_route_table.haryoiro_public_rt.id
 }
 
 
@@ -62,17 +62,17 @@ variable "allowed_cidr" {
 }
 
 locals {
-  myip         = chomp(data.http.ifconfig.body)
+  self_ip         = chomp(data.http.ifconfig.response_body)
   all_cidr     = "0.0.0.0/0"
-  allowed_cidr = (var.allowed_cidr == null) ? "${local.myip}/32" : var.allowed_cidr
+  allowed_cidr = (var.allowed_cidr == null) ? "${local.self_ip}/32" : var.allowed_cidr
 }
 
-resource "aws_security_group" "handson_ec2_sg" {
-  name        = "terraform-handson-ec2-sg"
+resource "aws_security_group" "haryoiro_ec2_sg" {
+  name        = "haryoiro-ec2-sg"
   description = "For EC2 Linux"
-  vpc_id      = aws_vpc.handson_vpc.id
+  vpc_id      = aws_vpc.haryoiro_vpc.id
   tags = {
-    Name = "terraform-handson-ec2-sg"
+    Name = "haryoiro-ec2-sg"
   }
 
   ingress {
