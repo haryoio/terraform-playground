@@ -11,8 +11,8 @@ resource "tls_private_key" "private_key" {
 }
 
 locals {
-  public_key_file  = "$HOME/${local.key_name}.id_ed25519.pub"
-  private_key_file = "$HOME/${local.key_name}.id_ed25519"
+  public_key_file  = "~/${local.key_name}.id_ed25519.pub"
+  private_key_file = "~/${local.key_name}.id_ed25519"
 }
 
 resource "local_file" "private_key_pem" {
