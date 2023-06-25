@@ -181,7 +181,7 @@ locals {
   allowed_cidr = (var.allowed_cidr == null) ? "${local.self_ip}/32" : var.allowed_cidr
 }
 
-resource "aws_security_group" "haryoiro_ec2_sg" {
+resource "aws_security_group" "this" {
   name        = "${local.project_name}-ec2-sg"
   description = "For EC2 Linux"
   vpc_id      = aws_vpc.this.id
