@@ -17,4 +17,11 @@ provider "http" {}
 
 provider "porkbun" {
   api_key = local.keys["API_KEY"]
+  secret_key = local.keys["SECRET_KEY"]
+  porkbun_dns_record = {
+    domain = "haryoiro.com"
+    name = "a"
+    type = "A"
+    content = aws_instance.this.*.public_ip
+  }
 }
