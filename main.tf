@@ -5,6 +5,13 @@ terraform {
       version = "0.2.0"
     }
   }
+  backend "s3" {
+    bucket = "terraform-state-haryoiro"
+    key = "haryoiro/terraform.tfstate"
+    region = "ap-northeast-1"
+    shared_credentials_file = "$HOME/.aws/credentials"
+    profile = "default"
+  }
 }
 
 provider "aws" {
