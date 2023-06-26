@@ -87,7 +87,6 @@ resource "aws_subnet" "private_1a" {
 # Elastic IP
 # -----------------
 resource "aws_eip" "nat_1a" {
-  domain = "vpc"
   tags = {
     Name = "${local.project_name}-eip-for-natgw-1a"
   }
