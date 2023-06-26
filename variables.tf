@@ -1,5 +1,5 @@
 data "aws_secretsmanager_secret" "porkbun_keys" {
-  arn = "arn:aws:secretsmanager:ap-northeast-1:969566658592:secret:PORKBUN_API_KEY-gYB4lt"
+  name = "PORKBUN_KEY"
 }
 
 data "aws_secretsmanager_secret_version" "porkbun_keys" {
