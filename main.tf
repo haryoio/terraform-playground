@@ -1,16 +1,16 @@
 terraform {
   required_providers {
     porkbun = {
-      source = "cullenmcdermott/porkbun"
+      source  = "cullenmcdermott/porkbun"
       version = "0.2.0"
     }
   }
   backend "s3" {
-    bucket = "terraform-state-haryoiro"
-    key = "haryoiro/terraform.tfstate"
-    region = "ap-northeast-1"
+    bucket                  = "terraform-state-haryoiro"
+    key                     = "haryoiro/terraform.tfstate"
+    region                  = "ap-northeast-1"
     shared_credentials_file = "$HOME/.aws/credentials"
-    profile = "default"
+    profile                 = "default"
   }
 }
 
@@ -23,6 +23,6 @@ provider "aws" {
 provider "http" {}
 
 provider "porkbun" {
-  api_key = local.keys["API_KEY"]
+  api_key    = local.keys["API_KEY"]
   secret_key = local.keys["SECRET_KEY"]
 }

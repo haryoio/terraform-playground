@@ -13,7 +13,7 @@ resource "aws_s3_bucket_acl" "terraform_state" {
   depends_on = [aws_s3_bucket_ownership_controls.terraform_state]
 
   bucket = aws_s3_bucket.terraform_state.id
-  acl = "private"
+  acl    = "private"
 }
 
 
